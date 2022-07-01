@@ -6,8 +6,23 @@ const bcrypt = require("bcrypt")
 
 pool.connect()
 
-router.post('/login', async (req, res) => {
+router
+  .route("/login")
+  .get(async (req, res) => {
+    if (req.session.user && req.session.user.username) {
+        console.log("loggedin")
+        res.json({
+            loggedIn: true, username: req.session.user.username 
+        })
+    } else {
+        res.json({
+            loggedIn: false
+        })
+    }
+  })
+  .post(async (req, res) => {
     validateForm(req, res)
+    console.log(req.session.user)
 
     const potentionLogin = await pool.query(
         "SELECT id, username, passhash FROM users WHERE username=$1", 
@@ -45,7 +60,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
     validateForm(req, res)
 
     const existingUser = await pool.query(
