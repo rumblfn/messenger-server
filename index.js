@@ -36,7 +36,7 @@ io.on("connect", socket => {
     socket.on("add_friend", (friendName, cb) => {
         addFriend(socket, friendName, cb)
     })
-})
+}) 
 
 server.listen(4000, () => {
     console.log("Port 4000")
