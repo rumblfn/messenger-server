@@ -1,0 +1,136 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "/Users/samilvaliahmetov/education/programming/local-github/messenger-server",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2022-07-05 12:52:54",
+            "filesum": 16,
+            "codesum": 3321,
+            "commentsum": 3,
+            "blanksum": 49,
+            "statistics": {
+                ".js": {
+                    "code": 235,
+                    "comment": 1,
+                    "blank": 44
+                },
+                "": {
+                    "code": 25,
+                    "comment": 2,
+                    "blank": 5
+                },
+                ".json": {
+                    "code": 3060,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".md": {
+                    "code": 1,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 7,
+                    "comment": 1,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 5,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 12,
+                    "code": 80,
+                    "comment": 0,
+                    "filename": "controllers/authController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "controllers/rateLimiter.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "controllers/serverController.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": "controllers/socketController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "controllers/validateForm.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "db.js"
+                },
+                {
+                    "filename": "dump.rdb",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 9,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "index.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 3025,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "redis.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "routers/authRouter.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "routers/friendsRouter.js"
+                }
+            ]
+        }
+    ]
+}

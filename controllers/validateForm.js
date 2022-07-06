@@ -10,7 +10,7 @@ const formScheme = Yup.object({
         .min(8, "short password!"),
 })
 
-const validateForm = (req, res) => {
+const validateForm = (req, res, next) => {
     const formData = req.body;
     formScheme.validate(formData)
         .catch(err => {
@@ -18,9 +18,12 @@ const validateForm = (req, res) => {
         })
         .then(valid => {
             if (valid) {
-                console.log("form is good")
+                // console.log("form is good")
+                next()
+            } else {
+                res.status(422).send()
             }
         })
 }
 
-module.exports = validateForm
+module.exports = { validateForm, formScheme }
