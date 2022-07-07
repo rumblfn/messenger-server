@@ -114,7 +114,7 @@ module.exports.onDisconnect = async socket => {
     socket.to(friendRooms).emit("connected", false, socket.user.username)
 }
 
-module.exports.dm = async (socket, message) => {
+module.exports.dm = async (socket, message, id) => {
     message.from = socket.user.userid
 
     const messageString = [message.to, message.from, message.content].join(".")
@@ -122,7 +122,7 @@ module.exports.dm = async (socket, message) => {
     await redisClient.lpush(`chat:${message.to}`, messageString)
     await redisClient.lpush(`chat:${message.from}`, messageString)
 
-    socket.to(message.to).emit("dm", message)
+    socket.to(message.to).emit("dm", message, id)
 }
 
 const parseFriendList = async friendList => {

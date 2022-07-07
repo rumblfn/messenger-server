@@ -37,7 +37,7 @@ io.on("connect", socket => {
         addFriend(socket, friendName, cb)
     })
 
-    socket.on("dm", message => dm(socket, message))
+    socket.on("dm", (message, id) => dm(socket, message, id))
 
     socket.on("disconnect", () => onDisconnect(socket))
 }) 
