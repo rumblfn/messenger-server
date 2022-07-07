@@ -15,6 +15,13 @@ module.exports.handleLogin = (req, res) => {
     }
 }
 
+module.exports.handleLogout = (req, res) => {
+    req.session.user = null
+    res.json({
+        loggedIn: false
+    })
+}
+
 module.exports.attemptLogin = async (req, res) => {
     const potentionLogin = await pool.query(
         "SELECT id, username, passhash, userid FROM users WHERE username=$1",
