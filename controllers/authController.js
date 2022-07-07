@@ -4,7 +4,6 @@ const {v4: uuidv4} = require('uuid')
 
 module.exports.handleLogin = (req, res) => {
     if (req.session.user && req.session.user.username) {
-        console.log(req.session.user)
         res.json({
             loggedIn: true,
             username: req.session.user.username
