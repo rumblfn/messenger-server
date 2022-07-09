@@ -55,6 +55,20 @@ module.exports.initializeUser = async socket => {
     if (messages && messages.length) {
         socket.emit("messages", messages)
     }
+
+    const confirmationsQuery = await redisClient.lrange(`friendsExpectation:${socket.user.username}`, 0, -1)
+    const confirmations = confirmationsQuery.map(confirmationString => {
+        const parsedStr = confirmationString.split('.')
+        return {
+            type: parsedStr.pop(),
+            userid: parsedStr.pop(),
+            username: parsedStr.join(".")
+        }
+    })
+
+    if (confirmations && confirmations.length) {
+        socket.emit('confirmations', confirmations)
+    }
 };
 
 module.exports.addFriend = async (socket, username, cb) => {
@@ -83,24 +97,84 @@ module.exports.addFriend = async (socket, username, cb) => {
     const parsedCurrentFriendList = await parseFriendList(currentFriendList)
     let findedUser = parsedCurrentFriendList.find(friend => friend.username === username)
 
-    if (parsedCurrentFriendList && findedUser) {
+    if (parsedCurrentFriendList && !isEmptyObj(findedUser)) {
         cb({
             done: false,
-            errorMsg: "Request already sent"
+            errorMsg: "your friend <3"
         })
         return
     }
 
-    await redisClient.lpush(`friends:${socket.user.username}`, [
-        username, friend.userid
+    const expectationFriendList = await redisClient.lrange(
+        `friendsExpectation:${socket.user.username}`, 0, -1
+    )
+
+    const parsedExpectationFriendList = await parseExpectationFriendList(expectationFriendList)
+
+    for (let user of parsedExpectationFriendList) {
+        if (user.type === 'outgoing' && user.username === username) {
+            await redisClient.lpush(`friends:${socket.user.username}`, [
+                username, friend.userid
+            ].join('.'))
+            await redisClient.lrem(`friendsExpectation:${socket.user.username}`, 1, [
+                username, friend.userid, 'outgoing'
+            ].join('.'))
+
+            socket.to(friend.userid).emit("add_chat", {
+                username: socket.user.username,
+                userid: socket.user.userid,
+                connected: true
+            })
+
+            cb({
+                done: true,
+                friend: {
+                    username,
+                    userid: friend.userid,
+                    connected: eval(friend.connected)
+                }
+            })
+
+            await redisClient.lpush(`friends:${username}`, [
+                socket.user.username, socket.user.userid
+            ].join('.'))
+
+            await redisClient.lrem(`friendsExpectation:${username}`, 1, [
+                socket.user.username, socket.user.userid, 'incoming'
+            ].join('.'))
+
+            return
+        } else if (user.type === 'incoming' && user.username === username) {
+            cb({
+                done: false,
+                errorMsg: "Request already sent"
+            })
+
+            return
+        }
+    }
+
+    await redisClient.lpush(`friendsExpectation:${socket.user.username}`, [
+        username, friend.userid, 'incoming'
     ].join('.'))
+    await redisClient.lpush(`friendsExpectation:${username}`, [
+        socket.user.username, socket.user.userid, 'outgoing'
+    ].join('.'))
+
+    socket.to(friend.userid).emit("add_confirmation", {
+        username: socket.user.username,
+        userid: socket.user.userid,
+        type: 'outgoing'
+    })
+
     cb({
         done: true,
-        friend: {
-            username,
+        confirmation: {
             userid: friend.userid,
-            connected: eval(friend.connected)
-        }
+            username,
+            type: 'incoming'
+        },
+        errorMsg: `${username} request is awaiting confirmation`
     })
 }
 
@@ -125,6 +199,44 @@ module.exports.dm = async (socket, message, id) => {
     socket.to(message.to).emit("dm", message, id)
 }
 
+module.exports.acceptConf = async (socket, user) => {
+    await redisClient.lpush(`friends:${socket.user.username}`, [
+        user.username, user.userid
+    ].join('.'))
+    await redisClient.lrem(`friendsExpectation:${socket.user.username}`, 1, [
+        user.username, user.userid, 'outgoing'
+    ].join('.'))
+    await redisClient.lpush(`friends:${user.username}`, [
+        socket.user.username, socket.user.userid
+    ].join('.'))
+    await redisClient.lrem(`friendsExpectation:${user.username}`, 1, [
+        socket.user.username, socket.user.userid, 'incoming'
+    ].join('.'))
+
+    socket.to(user.userid).emit("add_chat", {
+        username: socket.user.username,
+        userid: socket.user.userid,
+        connected: true
+    })
+
+    socket.emit("add_chat", {
+        username: user.username,
+        userid: user.userid,
+        connected: user.connected // connection
+    })
+}
+
+module.exports.declineConf = async (socket, user) => {
+    await redisClient.lrem(`friendsExpectation:${socket.user.username}`, 1, [
+        user.username, user.userid, user.type
+    ].join('.'))
+    await redisClient.lrem(`friendsExpectation:${user.username}`, 1, [
+        socket.user.username, socket.user.userid, user.type === 'incoming' ? 'outgoing' : 'incoming'
+    ].join('.'))
+
+    socket.to(user.userid).emit("remove_confirmation", socket.user.username)
+}
+
 const parseFriendList = async friendList => {
     const newFriendList = []
 
@@ -144,6 +256,29 @@ const parseFriendList = async friendList => {
         })
     }
     return newFriendList
+}
+
+const parseExpectationFriendList = async expectationFriendList => {
+    const newExpectationFriendList = []
+
+    for (let user of expectationFriendList) {
+        const parsedFriend = user.split('.')
+
+        if (parsedFriend.length < 3) {
+            continue
+        }
+
+        const type = parsedFriend.pop()
+        const userid = parsedFriend.pop()
+        const username = parsedFriend.join('.')
+        const userConnected = await redisClient.hget(`userid:${username}`, "connected")
+
+        newExpectationFriendList.push({
+            username, userid, type, userConnected: eval(userConnected)
+        })
+    }
+
+    return newExpectationFriendList
 }
 
 function isEmptyObj(object) {
