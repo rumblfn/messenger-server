@@ -68,7 +68,7 @@ module.exports.addFriend = async (socket, username, cb) => {
 
     const friend = await redisClient.hgetall(`userid:${username}`)
 
-    if (!friend) {
+    if (isEmptyObj(friend)) {
         cb({
             done: false,
             errorMsg: "User doesn't exist."
@@ -99,7 +99,7 @@ module.exports.addFriend = async (socket, username, cb) => {
         friend: {
             username,
             userid: friend.userid,
-            connected: friend.connected
+            connected: eval(friend.connected)
         }
     })
 }
@@ -145,3 +145,12 @@ const parseFriendList = async friendList => {
     }
     return newFriendList
 }
+
+function isEmptyObj(object) {
+    for (let key in object) {
+      if (object.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
