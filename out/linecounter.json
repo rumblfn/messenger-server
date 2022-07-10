@@ -131,6 +131,141 @@
                     "filename": "routers/friendsRouter.js"
                 }
             ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2022-07-10 00:29:17",
+            "filesum": 17,
+            "codesum": 3588,
+            "commentsum": 7,
+            "blanksum": 106,
+            "statistics": {
+                ".js": {
+                    "code": 484,
+                    "comment": 5,
+                    "blank": 101
+                },
+                ".json": {
+                    "code": 3078,
+                    "comment": 0,
+                    "blank": 0
+                },
+                "": {
+                    "code": 25,
+                    "comment": 2,
+                    "blank": 5
+                },
+                ".md": {
+                    "code": 1,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 7,
+                    "comment": 1,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 5,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 13,
+                    "code": 81,
+                    "comment": 2,
+                    "filename": "controllers/authController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "controllers/friendsController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 1,
+                    "filename": "controllers/rateLimiter.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "controllers/serverController.js"
+                },
+                {
+                    "blank": 50,
+                    "code": 241,
+                    "comment": 1,
+                    "filename": "controllers/socketController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 25,
+                    "comment": 1,
+                    "filename": "controllers/validateForm.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "db.js"
+                },
+                {
+                    "filename": "dump.rdb",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 12,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "index.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 3042,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "redis.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "routers/authRouter.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "routers/friendsRouter.js"
+                }
+            ]
         }
     ]
 }
