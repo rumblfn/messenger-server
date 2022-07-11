@@ -25,7 +25,7 @@ app.use("/auth", authRouter)
 app.use("/friends", friendsRouter)
 
 app.get('/', (req, res) => {
-    res.json('Hi')
+    res.json('Server for messenger')
 })
 
 io.use(wrap(sessionMiddleware))

@@ -17,6 +17,7 @@ module.exports.initializeUser = async socket => {
         ...socket.request.session.user
     };
     socket.join(socket.user.userid)
+
     await redisClient.hset(
         `userid:${socket.user.username}`,
         "userid",
@@ -54,6 +55,12 @@ module.exports.initializeUser = async socket => {
 
     if (messages && messages.length) {
         socket.emit("messages", messages)
+    }
+
+    const unreadOfflineMessagesCounter = await redisClient.hgetall(`userid:${socket.user.username}:chats`)
+
+    if (!isEmptyObj(unreadOfflineMessagesCounter)) {
+        socket.emit('unreadMessages', unreadOfflineMessagesCounter)
     }
 
     const confirmationsQuery = await redisClient.lrange(`friendsExpectation:${socket.user.username}`, 0, -1)
@@ -197,6 +204,10 @@ module.exports.dm = async (socket, message, id) => {
     await redisClient.lpush(`chat:${message.from}`, messageString)
 
     socket.to(message.to).emit("dm", message, id)
+
+    if (!message.connected) {
+        await redisClient.hincrby(`userid:${message.username}:chats`, message.from, 1)
+    }
 }
 
 module.exports.acceptConf = async (socket, user) => {
