@@ -5,7 +5,6 @@ module.exports.rateLimiter = (secondsLimit, limitAmount) =>
         const ip = req.connection.remoteAddress.slice(0, 4)
 
         const [response] = await redisClient.multi().incr(ip).expire(ip, secondsLimit).exec()
-        // console.log(response[1])
 
         if (response[1] > limitAmount) res.json({
             loggedIn: false,

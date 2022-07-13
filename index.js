@@ -9,7 +9,15 @@ require("dotenv").config();
 const server = require("http").createServer(app)
 
 const { sessionMiddleware, corsConfig, wrap } = require("./controllers/serverController");
-const { addFriend, initializeUser, authorizeUser, onDisconnect, dm, acceptConf, declineConf, readMessages } = require("./controllers/socketController");
+
+const { addFriend } = require("./controllers/socketController/addFriend");
+const { dm } = require("./controllers/socketController/userMessage");
+const { readMessages } = require("./controllers/socketController/readChatMessages");
+const { acceptConf } = require("./controllers/socketController/acceptFriendRequest");
+const { declineConf } = require("./controllers/socketController/declineFriendRequest");
+const { onDisconnect } = require("./controllers/socketController/disconnect");
+const { initializeUser } = require("./controllers/socketController/initializeUser");
+const { authorizeUser } = require("./controllers/socketController/authorizeUser");
 
 const io = new Server(server, {
     cors: corsConfig

@@ -84,13 +84,10 @@ module.exports.attemptRegister = async (req, res) => {
             username: req.body.username
         })
 
-        // console.log('y')
-
     } else {
         res.json({
             loggedIn: false,
             status: "Username taken"
         })
-        // console.log('n')
     }
 }
