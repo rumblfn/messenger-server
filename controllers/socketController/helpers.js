@@ -10,12 +10,13 @@ module.exports.parseFriendList = async friendList => {
         }
         const friendid = parsedFriend.pop()
         const friendname = parsedFriend.join('.')
-        const friendConnected = await redisClient.hget(`userid:${friendid}`, "connected")
+        const friendFromBase = await redisClient.hgetall(`userid:${friendid}`)
 
         newFriendList.push({
             username: friendname,
             userid: friendid,
-            connected: eval(friendConnected)
+            connected: eval(friendFromBase?.connected),
+            lastActiveTime: friendFromBase?.lastActiveTime
         })
     }
     return newFriendList
