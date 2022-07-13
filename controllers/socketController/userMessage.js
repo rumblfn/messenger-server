@@ -5,9 +5,9 @@ module.exports.dm = async (socket, message, id) => {
 
     socket.to(message.to).emit("dm", message, id)
 
-    const messageString = [message.to, message.from, message.content].join(".")
+    const messageString = [message.timestamp, message.to, message.from, message.content].join(".")
 
     await redisClient.hincrby(`userid:${message.username}:chats`, message.from, 1)
-    await redisClient.lpush(`chat:${message.to}`, messageString)
-    await redisClient.lpush(`chat:${message.from}`, messageString)
+    await redisClient.rpush(`chat:${message.to}`, messageString)
+    await redisClient.rpush(`chat:${message.from}`, messageString)
 }

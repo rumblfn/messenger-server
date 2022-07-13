@@ -36,6 +36,7 @@ module.exports.initializeUser = async socket => {
     const messages = msgQuery.map(msgString => {
         const parsedStr = msgString.split(".")
         return {
+            timestamp: parsedStr.shift(),
             to: parsedStr.shift(),
             from: parsedStr.shift(),
             content: parsedStr.join(".")
