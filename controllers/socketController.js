@@ -198,16 +198,17 @@ module.exports.onDisconnect = async socket => {
 module.exports.dm = async (socket, message, id) => {
     message.from = socket.user.userid
 
-    const messageString = [message.to, message.from, message.content].join(".")
-
-    await redisClient.lpush(`chat:${message.to}`, messageString)
-    await redisClient.lpush(`chat:${message.from}`, messageString)
-
     socket.to(message.to).emit("dm", message, id)
 
-    if (!message.connected) {
-        await redisClient.hincrby(`userid:${message.username}:chats`, message.from, 1)
-    }
+    const messageString = [message.to, message.from, message.content].join(".")
+
+    await redisClient.hincrby(`userid:${message.username}:chats`, message.from, 1)
+    await redisClient.lpush(`chat:${message.to}`, messageString)
+    await redisClient.lpush(`chat:${message.from}`, messageString)
+}
+
+module.exports.readMessages = async (socket, userid) => {
+    await redisClient.hdel(`userid:${socket.user.username}:chats`, userid)
 }
 
 module.exports.acceptConf = async (socket, user) => {
