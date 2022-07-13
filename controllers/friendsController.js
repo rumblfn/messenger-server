@@ -4,7 +4,7 @@ module.exports.getFriends = async (req, res) => {
     if (req.session.user && req.session.user.username) {
     
         const friendList = await redisClient.lrange(
-            `friends:${req.session.user.username}`,
+            `friends:${req.session.user.userid}`,
             0,
             -1
         );

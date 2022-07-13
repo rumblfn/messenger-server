@@ -1,10 +1,10 @@
 const redisClient = require("../../redis")
 
 module.exports.declineConf = async (socket, user) => {
-    await redisClient.lrem(`friendsExpectation:${socket.user.username}`, 1, [
+    await redisClient.lrem(`friendsExpectation:${socket.user.userid}`, 1, [
         user.username, user.userid, user.type
     ].join('.'))
-    await redisClient.lrem(`friendsExpectation:${user.username}`, 1, [
+    await redisClient.lrem(`friendsExpectation:${user.userid}`, 1, [
         socket.user.username, socket.user.userid, user.type === 'incoming' ? 'outgoing' : 'incoming'
     ].join('.'))
 

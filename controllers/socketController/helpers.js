@@ -10,7 +10,7 @@ module.exports.parseFriendList = async friendList => {
         }
         const friendid = parsedFriend.pop()
         const friendname = parsedFriend.join('.')
-        const friendConnected = await redisClient.hget(`userid:${friendname}`, "connected")
+        const friendConnected = await redisClient.hget(`userid:${friendid}`, "connected")
 
         newFriendList.push({
             username: friendname,
@@ -34,7 +34,7 @@ module.exports.parseExpectationFriendList = async expectationFriendList => {
         const type = parsedFriend.pop()
         const userid = parsedFriend.pop()
         const username = parsedFriend.join('.')
-        const userConnected = await redisClient.hget(`userid:${username}`, "connected")
+        const userConnected = await redisClient.hget(`userid:${userid}`, "connected")
 
         newExpectationFriendList.push({
             username, userid, type, userConnected: eval(userConnected)

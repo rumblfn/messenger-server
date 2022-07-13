@@ -18,6 +18,7 @@ const { declineConf } = require("./controllers/socketController/declineFriendReq
 const { onDisconnect } = require("./controllers/socketController/disconnect");
 const { initializeUser } = require("./controllers/socketController/initializeUser");
 const { authorizeUser } = require("./controllers/socketController/authorizeUser");
+const { chatMessages } = require("./controllers/socketController/getChatMessages");
 
 const io = new Server(server, {
     cors: corsConfig
@@ -53,6 +54,8 @@ io.on("connect", socket => {
     socket.on("decline_confirmation", user => declineConf(socket, user))
 
     socket.on("disconnect", () => onDisconnect(socket))
+
+    socket.on("chatMessages", userid => chatMessages(socket, userid))
 }) 
 
 server.listen(4000, () => {

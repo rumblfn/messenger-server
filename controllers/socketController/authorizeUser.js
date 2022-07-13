@@ -7,7 +7,7 @@ module.exports.authorizeUser = async (socket, next) => {
         socket.user = {
             ...socket.request.session.user
         }
-        await redisClient.hset(`userid:${socket.user.username}`, "userid", socket.user.userid)
+        await redisClient.hset(`userid:${socket.user.userid}`, "userid", socket.user.userid)
         next()
     }
 }

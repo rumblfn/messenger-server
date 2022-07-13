@@ -1,3 +1,4 @@
+const pool = require("../../db")
 const redisClient = require("../../redis")
 const {
     parseFriendList,
@@ -14,7 +15,8 @@ module.exports.addFriend = async (socket, username, cb) => {
         return
     }
 
-    const friend = await redisClient.hgetall(`userid:${username}`)
+    const userid = (await pool.query("SELECT userid FROM users WHERE username=$1 LIMIT 1", [username])).rows[0]?.userid
+    const friend = await redisClient.hgetall(`userid:${userid}`)
 
     if (isEmptyObj(friend)) {
         cb({
@@ -25,7 +27,7 @@ module.exports.addFriend = async (socket, username, cb) => {
     }
 
     const currentFriendList = await redisClient.lrange(
-        `friends:${socket.user.username}`, 0, -1
+        `friends:${socket.user.userid}`, 0, -1
     )
 
     const parsedCurrentFriendList = await parseFriendList(currentFriendList)
@@ -40,17 +42,17 @@ module.exports.addFriend = async (socket, username, cb) => {
     }
 
     const expectationFriendList = await redisClient.lrange(
-        `friendsExpectation:${socket.user.username}`, 0, -1
+        `friendsExpectation:${socket.user.userid}`, 0, -1
     )
 
     const parsedExpectationFriendList = await parseExpectationFriendList(expectationFriendList)
 
     for (let user of parsedExpectationFriendList) {
         if (user.type === 'outgoing' && user.username === username) {
-            await redisClient.lpush(`friends:${socket.user.username}`, [
+            await redisClient.lpush(`friends:${socket.user.userid}`, [
                 username, friend.userid
             ].join('.'))
-            await redisClient.lrem(`friendsExpectation:${socket.user.username}`, 1, [
+            await redisClient.lrem(`friendsExpectation:${socket.user.userid}`, 1, [
                 username, friend.userid, 'outgoing'
             ].join('.'))
 
@@ -69,16 +71,16 @@ module.exports.addFriend = async (socket, username, cb) => {
                 }
             })
 
-            await redisClient.lpush(`friends:${username}`, [
+            await redisClient.lpush(`friends:${userid}`, [
                 socket.user.username, socket.user.userid
             ].join('.'))
 
-            await redisClient.lrem(`friendsExpectation:${username}`, 1, [
+            await redisClient.lrem(`friendsExpectation:${userid}`, 1, [
                 socket.user.username, socket.user.userid, 'incoming'
             ].join('.'))
 
             return
-        } else if (user.type === 'incoming' && user.username === username) {
+        } else if (user.type === 'incoming' && user.userid === userid) {
             cb({
                 done: false,
                 errorMsg: "Request already sent"
@@ -88,10 +90,10 @@ module.exports.addFriend = async (socket, username, cb) => {
         }
     }
 
-    await redisClient.lpush(`friendsExpectation:${socket.user.username}`, [
+    await redisClient.lpush(`friendsExpectation:${socket.user.userid}`, [
         username, friend.userid, 'incoming'
     ].join('.'))
-    await redisClient.lpush(`friendsExpectation:${username}`, [
+    await redisClient.lpush(`friendsExpectation:${userid}`, [
         socket.user.username, socket.user.userid, 'outgoing'
     ].join('.'))
 

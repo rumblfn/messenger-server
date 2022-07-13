@@ -8,14 +8,14 @@ module.exports.initializeUser = async socket => {
     socket.join(socket.user.userid)
 
     await redisClient.hset(
-        `userid:${socket.user.username}`,
+        `userid:${socket.user.userid}`,
         "userid",
         socket.user.userid,
         "connected",
         true
     );
     const friendList = await redisClient.lrange(
-        `friends:${socket.user.username}`,
+        `friends:${socket.user.userid}`,
         0,
         -1
     );
@@ -31,29 +31,13 @@ module.exports.initializeUser = async socket => {
 
     socket.emit("friends", parsedFriendList);
 
-    const msgQuery = await redisClient.lrange(`chat:${socket.user.userid}`, 0, -1)
-
-    const messages = msgQuery.map(msgString => {
-        const parsedStr = msgString.split(".")
-        return {
-            timestamp: parsedStr.shift(),
-            to: parsedStr.shift(),
-            from: parsedStr.shift(),
-            content: parsedStr.join(".")
-        }
-    })
-
-    if (messages && messages.length) {
-        socket.emit("messages", messages)
-    }
-
-    const unreadOfflineMessagesCounter = await redisClient.hgetall(`userid:${socket.user.username}:chats`)
+    const unreadOfflineMessagesCounter = await redisClient.hgetall(`userid:${socket.user.userid}:chats`)
 
     if (!isEmptyObj(unreadOfflineMessagesCounter)) {
         socket.emit('unreadMessages', unreadOfflineMessagesCounter)
     }
 
-    const confirmationsQuery = await redisClient.lrange(`friendsExpectation:${socket.user.username}`, 0, -1)
+    const confirmationsQuery = await redisClient.lrange(`friendsExpectation:${socket.user.userid}`, 0, -1)
     const confirmations = confirmationsQuery.map(confirmationString => {
         const parsedStr = confirmationString.split('.')
         return {
