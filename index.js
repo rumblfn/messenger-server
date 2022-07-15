@@ -1,6 +1,8 @@
 const express = require("express");
 const helmet = require("helmet");
-const {Server} = require("socket.io")
+const {
+    Server
+} = require("socket.io")
 const app = express();
 const cors = require("cors")
 const authRouter = require("./routers/authRouter")
@@ -8,17 +10,39 @@ const friendsRouter = require("./routers/friendsRouter")
 require("dotenv").config();
 const server = require("http").createServer(app)
 
-const { sessionMiddleware, corsConfig, wrap } = require("./controllers/serverController");
+const {
+    sessionMiddleware,
+    corsConfig,
+    wrap
+} = require("./controllers/serverController");
 
-const { addFriend } = require("./controllers/socketController/addFriend");
-const { dm } = require("./controllers/socketController/userMessage");
-const { readMessages } = require("./controllers/socketController/readChatMessages");
-const { acceptConf } = require("./controllers/socketController/acceptFriendRequest");
-const { declineConf } = require("./controllers/socketController/declineFriendRequest");
-const { onDisconnect } = require("./controllers/socketController/disconnect");
-const { initializeUser } = require("./controllers/socketController/initializeUser");
-const { authorizeUser } = require("./controllers/socketController/authorizeUser");
-const { chatMessages } = require("./controllers/socketController/getChatMessages");
+const {
+    addFriend
+} = require("./controllers/socketController/addFriend");
+const {
+    dm
+} = require("./controllers/socketController/userMessage");
+const {
+    readMessages
+} = require("./controllers/socketController/readChatMessages");
+const {
+    acceptConf
+} = require("./controllers/socketController/acceptFriendRequest");
+const {
+    declineConf
+} = require("./controllers/socketController/declineFriendRequest");
+const {
+    onDisconnect
+} = require("./controllers/socketController/disconnect");
+const {
+    initializeUser
+} = require("./controllers/socketController/initializeUser");
+const {
+    authorizeUser
+} = require("./controllers/socketController/authorizeUser");
+const {
+    chatMessages
+} = require("./controllers/socketController/getChatMessages");
 
 const io = new Server(server, {
     cors: corsConfig
@@ -56,7 +80,19 @@ io.on("connect", socket => {
     socket.on("disconnect", () => onDisconnect(socket))
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
-}) 
+
+    socket.on("callUser", (data) => {
+        io.to(data.userToCall).emit("callUser", {
+            signal: data.signalData,
+            from: socket.user.userid,
+            name: socket.user.username
+        })
+    })
+
+    socket.on("answerCall", (data) => {
+        io.to(data.to).emit("callAccepted", data.signal)
+    })
+})
 
 server.listen(4000, () => {
     console.log("Port 4000")
