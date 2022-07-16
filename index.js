@@ -10,6 +10,8 @@ const friendsRouter = require("./routers/friendsRouter")
 require("dotenv").config();
 const server = require("http").createServer(app)
 
+let socketList = {};
+
 const {
     sessionMiddleware,
     corsConfig,
@@ -81,18 +83,21 @@ io.on("connect", socket => {
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
 
-    socket.on("callUser", (data) => {
-        io.to(data.userToCall).emit("callUser", {
-            signal: data.signalData,
-            from: socket.user.userid,
-            name: socket.user.username
-        })
-    })
+    socket.on('callUser', userid => socket.to(userid).emit("callUser", {
+        username: socket.user.username,
+        userid: socket.user.userid
+    }))
 
-    socket.on("answerCall", (data) => {
-        io.to(data.to).emit("callAccepted", data.signal)
-    })
-})
+    socket.on('cancelUserCall', userid => socket.to(userid).emit('cancelUserCall', {
+        username: socket.user.username,
+        userid: socket.user.userid
+    }))
+
+    socket.on('cancelAwaitingCall', userid => socket.to(userid).emit('cancelAwaitingCall', {
+        username: socket.user.username,
+        userid: socket.user.userid
+    }))
+});
 
 server.listen(4000, () => {
     console.log("Port 4000")
