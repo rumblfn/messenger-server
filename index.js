@@ -48,8 +48,6 @@ const io = new Server(server, {
     cors: corsConfig
 })
 
-const rooms = {}
-
 app.use(helmet())
 app.use(cors(corsConfig))
 
@@ -79,37 +77,28 @@ io.on("connect", socket => {
     socket.on("accept_confirmation", user => acceptConf(socket, user))
     socket.on("decline_confirmation", user => declineConf(socket, user))
 
-    socket.on("disconnect", () => onDisconnect(socket))
+    socket.on("disconnect", () => {
+        onDisconnect(socket)
+    })
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
 
-    socket.on('callUser', (userid, newRoomId) => {
-        rooms[newRoomId] = [userid, socket.user.userid]
+    socket.on('me', () => socket.emit('me', socket.id))
 
-        socket.to(userid).emit("callUser", {
-            username: socket.user.username,
-            userid: socket.user.userid,
-        }, newRoomId)
+    socket.on("callEnded", () => {
+		socket.broadcast.emit("callEnded")
+	})
+
+    socket.on('callUser', data => {
+        socket.to(data.userToCall).emit('callUser', {
+            signal: data.signalData,
+            from: data.from,
+            name: data.name
+        })
     })
 
-    socket.on('cancelUserCall', userid => socket.to(userid).emit('cancelUserCall', {
-        username: socket.user.username,
-        userid: socket.user.userid
-    }))
-
-    socket.on('cancelAwaitingCall', userid => socket.to(userid).emit('cancelAwaitingCall', {
-        username: socket.user.username,
-        userid: socket.user.userid
-    }))
-
-    socket.on('call accepted', userid => socket.to(userid).emit('call accepted'))
-
-    socket.on('send peer id', data => {
-        const {
-            roomID,
-            id
-        } = data
-        socket.to(rooms[roomID]).emit('user peer id', id)
+    socket.on('answerCall', data => {
+        socket.to(data.to).emit("callAccepted", data.signal)
     })
 
 });
