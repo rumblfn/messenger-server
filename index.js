@@ -10,9 +10,6 @@ const friendsRouter = require("./routers/friendsRouter")
 require("dotenv").config();
 const server = require("http").createServer(app)
 
-const users = {}
-const socketToRoom = {}
-
 const {
     sessionMiddleware,
     corsConfig,
@@ -51,6 +48,8 @@ const io = new Server(server, {
     cors: corsConfig
 })
 
+const rooms = {}
+
 app.use(helmet())
 app.use(cors(corsConfig))
 
@@ -84,10 +83,14 @@ io.on("connect", socket => {
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
 
-    socket.on('callUser', (userid, newRoomId) => socket.to(userid).emit("callUser", {
-        username: socket.user.username,
-        userid: socket.user.userid,
-    }, newRoomId))
+    socket.on('callUser', (userid, newRoomId) => {
+        rooms[newRoomId] = [userid, socket.user.userid]
+
+        socket.to(userid).emit("callUser", {
+            username: socket.user.username,
+            userid: socket.user.userid,
+        }, newRoomId)
+    })
 
     socket.on('cancelUserCall', userid => socket.to(userid).emit('cancelUserCall', {
         username: socket.user.username,
@@ -99,41 +102,16 @@ io.on("connect", socket => {
         userid: socket.user.userid
     }))
 
-    socket.on('join room', roomID => {
-        if (users[roomID]) {
-            const length = users[roomID].length
-            if (length === 4) {
-                socket.emit('room full')
-                return
-            }
+    socket.on('call accepted', userid => socket.to(userid).emit('call accepted'))
 
-            users[roomID].push(socket.user.userid);
-        } else {
-            users[roomID] = [socket.user.userid];
-        }
-
-        socketToRoom[socket.user.userid] = roomID;
-        const usersInThisRoom = users[roomID].filter(id => id !== socket.user.userid);
-
-        socket.emit("all users", usersInThisRoom);
+    socket.on('send peer id', data => {
+        const {
+            roomID,
+            id
+        } = data
+        socket.to(rooms[roomID]).emit('user peer id', id)
     })
 
-    socket.on("sending signal", payload => {
-        io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
-    });
-
-    socket.on("returning signal", payload => {
-        io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.user.userid });
-    });
-
-    socket.on('leave room', () => {
-        const roomID = socketToRoom[socket.user.userid];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.user.userid);
-            users[roomID] = room;
-        }
-    });
 });
 
 server.listen(4000, () => {
