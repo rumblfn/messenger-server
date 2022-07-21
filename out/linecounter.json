@@ -638,6 +638,195 @@
                     "filename": "routers/friendsRouter.js"
                 }
             ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2022-07-21 13:32:39",
+            "filesum": 26,
+            "codesum": 3655,
+            "commentsum": 5,
+            "blanksum": 114,
+            "statistics": {
+                ".js": {
+                    "code": 549,
+                    "comment": 1,
+                    "blank": 109
+                },
+                "": {
+                    "code": 27,
+                    "comment": 4,
+                    "blank": 5
+                },
+                ".json": {
+                    "code": 3078,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".md": {
+                    "code": 1,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 3,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 5,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 12,
+                    "code": 81,
+                    "comment": 0,
+                    "filename": "controllers/authController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "controllers/friendsController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "controllers/rateLimiter.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "controllers/serverController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 25,
+                    "comment": 1,
+                    "filename": "controllers/socketController/acceptFriendRequest.js"
+                },
+                {
+                    "blank": 18,
+                    "code": 97,
+                    "comment": 0,
+                    "filename": "controllers/socketController/addFriend.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "controllers/socketController/authorizeUser.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "controllers/socketController/declineFriendRequest.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "controllers/socketController/disconnect.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "controllers/socketController/getChatMessages.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 45,
+                    "comment": 0,
+                    "filename": "controllers/socketController/helpers.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "controllers/socketController/initializeUser.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 4,
+                    "comment": 0,
+                    "filename": "controllers/socketController/readChatMessages.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "controllers/socketController/userMessage.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "controllers/validateForm.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "db.js"
+                },
+                {
+                    "filename": "dump.rdb",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 16,
+                    "code": 70,
+                    "comment": 0,
+                    "filename": "index.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 3042,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "redis.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "routers/authRouter.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "routers/friendsRouter.js"
+                }
+            ]
         }
     ]
 }

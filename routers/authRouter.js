@@ -1,8 +1,8 @@
 const express = require("express");
-const {validateForm} = require("../controllers/validateForm");
+const {validateForm, validateNewPassword} = require("../controllers/validateForm");
 const router = express.Router();
 
-const {handleLogin, attemptLogin, attemptRegister, handleLogout} = require('../controllers/authController');
+const {handleLogin, attemptLogin, attemptRegister, handleLogout, attemptChangePassword} = require('../controllers/authController');
 const { rateLimiter } = require("../controllers/rateLimiter");
 
 router
@@ -16,5 +16,9 @@ router
 
 router
     .post("/signup", validateForm, rateLimiter(30, 4), attemptRegister)
+
+router
+    .route("/change-password")
+    .post(validateNewPassword, rateLimiter(60, 10), attemptChangePassword)
 
 module.exports = router

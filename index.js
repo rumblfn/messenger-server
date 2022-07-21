@@ -10,12 +10,6 @@ const friendsRouter = require("./routers/friendsRouter")
 require("dotenv").config();
 const server = require("http").createServer(app)
 
-let socketList = {};
-const socketIdToRoom = {}
-
-const users = {};
-const socketToRoom = {};
-
 const {
     sessionMiddleware,
     corsConfig,
@@ -72,9 +66,7 @@ io.use(authorizeUser)
 io.on("connect", socket => {
     initializeUser(socket);
 
-    socket.on("add_friend", (friendName, cb) => {
-        addFriend(socket, friendName, cb)
-    })
+    socket.on("add_friend", (friendName, cb) => addFriend(socket, friendName, cb))
 
     socket.on("dm", (message, id) => dm(socket, message, id))
 
@@ -83,46 +75,9 @@ io.on("connect", socket => {
     socket.on("accept_confirmation", user => acceptConf(socket, user))
     socket.on("decline_confirmation", user => declineConf(socket, user))
 
-    socket.on("disconnect", () => {
-        onDisconnect(socket)
-
-        const roomId = socketIdToRoom[socket.id]
-        delete socketList[socket.id];
-        io
-            .to(roomId)
-            .emit('FE-user-leave', {
-                userId: socket.id
-            });
-        socket.leave(roomId)
-
-
-        const roomID = socketToRoom[socket.id];
-        let room = users[roomID];
-        if (room) {
-            room = room.filter(id => id !== socket.id);
-            users[roomID] = room;
-        }
-    })
+    socket.on("disconnect", () => onDisconnect(socket))
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
-
-    socket.on('me', () => socket.emit('me', socket.id))
-
-    socket.on("callEnded", () => {
-        socket.broadcast.emit("callEnded")
-    })
-
-    socket.on('callUser', data => {
-        socket.to(data.userToCall).emit('callUser', {
-            signal: data.signalData,
-            from: data.from,
-            name: data.name
-        })
-    })
-
-    socket.on('answerCall', data => {
-        socket.to(data.to).emit("callAccepted", data.signal)
-    })
 
 });
 
