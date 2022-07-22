@@ -20,31 +20,31 @@ const {
 
 const {
     addFriend
-} = require("./controllers/socketController/addFriend");
+} = require("./controllers/socket/addFriend");
 const {
     dm
-} = require("./controllers/socketController/userMessage");
+} = require("./controllers/socket/userMessage");
 const {
     readMessages
-} = require("./controllers/socketController/readChatMessages");
+} = require("./controllers/socket/readChatMessages");
 const {
     acceptConf
-} = require("./controllers/socketController/acceptFriendRequest");
+} = require("./controllers/socket/acceptFriendRequest");
 const {
     declineConf
-} = require("./controllers/socketController/declineFriendRequest");
+} = require("./controllers/socket/declineFriendRequest");
 const {
     onDisconnect
-} = require("./controllers/socketController/disconnect");
+} = require("./controllers/socket/disconnect");
 const {
     initializeUser
-} = require("./controllers/socketController/initializeUser");
+} = require("./controllers/socket/initializeUser");
 const {
     authorizeUser
-} = require("./controllers/socketController/authorizeUser");
+} = require("./controllers/socket/authorizeUser");
 const {
     chatMessages
-} = require("./controllers/socketController/getChatMessages");
+} = require("./controllers/socket/getChatMessages");
 
 const io = new Server(server, {
     cors: corsConfig

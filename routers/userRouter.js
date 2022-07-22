@@ -1,8 +1,8 @@
 const express = require("express");
-const { updateBanner } = require("../controllers/userController.js/updateBanner");
+const { updateBanner } = require("../controllers/user/updateBanner");
 const router = express.Router();
 const { dirname } = require('path');
-const { updateAvatar } = require("../controllers/userController.js/updateAvatar");
+const { updateAvatar } = require("../controllers/user/updateAvatar");
 
 router
     .route("/update-banner")

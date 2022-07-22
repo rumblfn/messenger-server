@@ -2,8 +2,14 @@ const express = require("express");
 const {validateForm, validateNewPassword} = require("../controllers/validateForm");
 const router = express.Router();
 
-const {handleLogin, attemptLogin, attemptRegister, handleLogout, attemptChangePassword, changeEmail, verifyCode} = require('../controllers/authController');
 const { rateLimiter } = require("../controllers/rateLimiter");
+const { handleLogin } = require("../controllers/auth/handleLogin");
+const { attemptLogin } = require("../controllers/auth/attemptLogin");
+const { attemptRegister } = require("../controllers/auth/attemptRegister");
+const { handleLogout } = require("../controllers/auth/handleLogout");
+const { attemptChangePassword } = require("../controllers/auth/attemptChangePassword");
+const { changeEmail } = require("../controllers/auth/changeEmail");
+const { verifyCode } = require("../controllers/auth/verifyCode");
 
 router
     .route("/login")
