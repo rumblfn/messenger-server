@@ -10,7 +10,7 @@ module.exports.handleLogin = async (req, res) => {
     if (req.session.user && req.session.user.username) {
 
         const potentionLogin = await pool.query(
-            "SELECT id, username, userid, email, avatar, banner FROM users WHERE username=$1",
+            "SELECT id, username, userid, email, avatar, banner, description FROM users WHERE username=$1",
             [req.session.user.username]
         )
 
@@ -21,7 +21,8 @@ module.exports.handleLogin = async (req, res) => {
             userid: potentionLogin.rows[0].userid,
             email: potentionLogin.rows[0].email,
             avatar: potentionLogin.rows[0].avatar,
-            banner: potentionLogin.rows[0].banner
+            banner: potentionLogin.rows[0].banner,
+            description: potentionLogin.rows[0].description
         })
     } else {
         res.json({
@@ -39,7 +40,7 @@ module.exports.handleLogout = (req, res) => {
 
 module.exports.attemptLogin = async (req, res) => {
     const potentionLogin = await pool.query(
-        "SELECT id, username, passhash, userid, email, avatar, banner FROM users WHERE username=$1",
+        "SELECT id, username, passhash, userid, email, avatar, banner, description FROM users WHERE username=$1",
         [req.body.username]
     )
 
@@ -62,7 +63,8 @@ module.exports.attemptLogin = async (req, res) => {
                 userid: potentionLogin.rows[0].userid,
                 email: potentionLogin.rows[0].email,
                 avatar: potentionLogin.rows[0].avatar,
-                banner: potentionLogin.rows[0].banner
+                banner: potentionLogin.rows[0].banner,
+                description: potentionLogin.rows[0].description
             })
         } else {
             res.json({
@@ -103,7 +105,11 @@ module.exports.attemptRegister = async (req, res) => {
             loggedIn: true,
             username: req.body.username,
             id: newUserQuery.rows[0].id,
-            userid: newUserQuery.rows[0].userid
+            userid: newUserQuery.rows[0].userid,
+            email: '',
+            avatar: '',
+            banner: '',
+            description: ''
         })
 
     } else {
