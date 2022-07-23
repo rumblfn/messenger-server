@@ -1,6 +1,7 @@
 const pool = require("../../db")
 const { dirname } = require('path');
 const fs = require('fs');
+const redisClient = require("../../redis");
 
 module.exports.updateBanner = async (req, res) => {
     if (!req.session.user || !req.session.user.id) {
@@ -50,6 +51,8 @@ module.exports.updateBanner = async (req, res) => {
             "UPDATE users SET banner=$1 WHERE id=$2",
             [fileName, userid]
         )
+
+        redisClient.hset(`userid:${req.session.user.userid}`, "banner", fileName)
 
         res.end(JSON.stringify({
             status: 'success',

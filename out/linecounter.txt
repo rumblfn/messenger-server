@@ -208,3 +208,77 @@ redis.js, code is 3, comment is 0, blank is 2.
 routers/authRouter.js, code is 15, comment is 0, blank is 5.
 routers/friendsRouter.js, code is 11, comment is 0, blank is 3.
 ===============================================================================
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2022-07-23 00:36:58
+count workspace : /Users/samilvaliahmetov/education/programming/local-github/messenger-server
+total files : 54
+total code lines : 4123
+total comment lines : 11
+total blank lines : 176
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |            .js|            884|              7|            170|     21|
+   |               |             31|              4|              6|   0.75|
+   |          .json|           3207|              0|              0|     78|
+   |            .md|              1|              0|              0|  0.024|
+   -------------------------------------------------------------------------
+.env, code is 11, comment is 3, blank is 0.
+.gitignore, code is 20, comment is 1, blank is 6.
+controllers/auth/attemptChangePassword.js, code is 45, comment is 0, blank is 11.
+controllers/auth/attemptLogin.js, code is 41, comment is 0, blank is 4.
+controllers/auth/attemptRegister.js, code is 38, comment is 0, blank is 6.
+controllers/auth/changeEmail.js, code is 52, comment is 0, blank is 8.
+controllers/auth/handleLogin.js, code is 23, comment is 0, blank is 3.
+controllers/auth/handleLogout.js, code is 6, comment is 0, blank is 0.
+controllers/auth/verifyCode.js, code is 57, comment is 0, blank is 12.
+controllers/friendsController.js, code is 17, comment is 0, blank is 3.
+controllers/rateLimiter.js, code is 11, comment is 0, blank is 3.
+controllers/serverController.js, code is 31, comment is 0, blank is 4.
+controllers/socket/acceptFriendRequest.js, code is 25, comment is 1, blank is 3.
+controllers/socket/addFriend.js, code is 97, comment is 0, blank is 18.
+controllers/socket/authorizeUser.js, code is 12, comment is 0, blank is 1.
+controllers/socket/declineFriendRequest.js, code is 10, comment is 0, blank is 2.
+controllers/socket/disconnect.js, code is 11, comment is 0, blank is 3.
+controllers/socket/getChatMessages.js, code is 14, comment is 0, blank is 3.
+controllers/socket/helpers.js, code is 45, comment is 0, blank is 10.
+controllers/socket/initializeUser.js, code is 44, comment is 0, blank is 9.
+controllers/socket/readChatMessages.js, code is 4, comment is 0, blank is 1.
+controllers/socket/userMessage.js, code is 9, comment is 0, blank is 5.
+controllers/user/updateAvatar.js, code is 49, comment is 0, blank is 9.
+controllers/user/updateBanner.js, code is 50, comment is 0, blank is 9.
+controllers/validateForm.js, code is 51, comment is 0, blank is 5.
+db.js, code is 11, comment is 0, blank is 3.
+dump.rdb, it is a binary file.
+images/avatars/161eebc1d1982f39ff33c0b68e3599ec94.jpeg, it is a binary file.
+images/avatars/164ca0590a268894391ce69b64e81b8460.jpg, it is a binary file.
+images/avatars/164eSVOil.jpg, it is a binary file.
+images/avatars/169cb6c31d3210df2d3050ffed675a9789.gif, it is a binary file.
+images/avatars/22a766ae2be9d50dce4c6a37c9b95b4b67.jpg, it is a binary file.
+images/avatars/417d410dd119c85a5d81c0cc097bc3af0f.jpg, it is a binary file.
+images/avatars/431eebc1d1982f39ff33c0b68e3599ec94.jpeg, it is a binary file.
+images/avatars/449cb6c31d3210df2d3050ffed675a9789.gif, it is a binary file.
+images/avatars/456c77524e3acceeefbfe2e7ceedb8f97f.jpg, it is a binary file.
+images/banners/09f93e32ed6daaf1072c3e660730c55c.jpg, it is a binary file.
+images/banners/167f2401b06944865dc997dacecd488413.gif, it is a binary file.
+images/banners/17729085.jpg, it is a binary file.
+images/banners/22697966.jpg, it is a binary file.
+images/banners/413x~ovC6.jpg, it is a binary file.
+images/banners/432ec5225db04780709746f0c255123960.gif, it is a binary file.
+images/banners/4424545.jpg, it is a binary file.
+images/banners/45548708.png, it is a binary file.
+images/banners/679714.png, it is a binary file.
+images/banners/B_Sy4E_.png, it is a binary file.
+index.js, code is 75, comment is 0, blank is 17.
+package-lock.json, code is 3168, comment is 0, blank is 0.
+package.json, code is 39, comment is 0, blank is 0.
+README.md, code is 1, comment is 0, blank is 0.
+redis.js, code is 3, comment is 0, blank is 2.
+routers/authRouter.js, code is 30, comment is 0, blank is 8.
+routers/friendsRouter.js, code is 11, comment is 0, blank is 3.
+routers/userRouter.js, code is 12, comment is 6, blank is 5.
+===============================================================================

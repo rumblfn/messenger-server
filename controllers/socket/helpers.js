@@ -16,7 +16,10 @@ module.exports.parseFriendList = async friendList => {
             username: friendname,
             userid: friendid,
             connected: eval(friendFromBase?.connected),
-            lastActiveTime: friendFromBase?.lastActiveTime
+            lastActiveTime: friendFromBase?.lastActiveTime,
+            description: friendFromBase?.about,
+            avatar: friendFromBase?.avatar,
+            banner: friendFromBase?.banner
         })
     }
     return newFriendList
