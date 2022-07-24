@@ -7,6 +7,7 @@ module.exports.chatMessages = async (socket, userid) => {
         const parsedStr = msgString.split(".")
         return {
             timestamp: parsedStr.shift(),
+            type: parsedStr.shift(),
             to: parsedStr.shift(),
             from: parsedStr.shift(),
             content: parsedStr.join(".")

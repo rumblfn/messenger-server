@@ -45,6 +45,9 @@ const {
 const {
     chatMessages
 } = require("./controllers/socket/getChatMessages");
+const { updateBanner } = require("./controllers/socket/updateBanner");
+const { updateAvatar } = require("./controllers/socket/updateAvatar");
+const { updateAbout } = require("./controllers/socket/updateAbout");
 
 const io = new Server(server, {
     cors: corsConfig
@@ -84,6 +87,12 @@ io.on("connect", socket => {
     socket.on("disconnect", () => onDisconnect(socket))
 
     socket.on("chatMessages", userid => chatMessages(socket, userid))
+
+    socket.on('banner-changed', filename => updateBanner(socket, filename))
+
+    socket.on('avatar-changed', filename => updateAvatar(socket, filename))
+
+    socket.on('about-changed', about => updateAbout(socket, about))
 
 });
 
