@@ -8,6 +8,7 @@ const cors = require("cors")
 const authRouter = require("./routers/authRouter")
 const friendsRouter = require("./routers/friendsRouter")
 const userRouter = require('./routers/userRouter')
+const mediaRouter = require('./routers/mediaRouter')
 require("dotenv").config();
 const server = require("http").createServer(app)
 const fileupload = require('express-fileupload')
@@ -65,6 +66,7 @@ app.use(fileupload())
 app.use("/auth", authRouter)
 app.use("/friends", friendsRouter)
 app.use('/user', userRouter)
+app.use('/media', mediaRouter)
 
 app.get('/', (req, res) => {
     res.json('Server for messenger')

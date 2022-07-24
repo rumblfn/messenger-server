@@ -1203,6 +1203,287 @@
                     "filename": "routers/userRouter.js"
                 }
             ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2022-07-24 08:03:46",
+            "filesum": 41,
+            "codesum": 4205,
+            "commentsum": 5,
+            "blanksum": 196,
+            "statistics": {
+                ".js": {
+                    "code": 966,
+                    "comment": 1,
+                    "blank": 190
+                },
+                ".json": {
+                    "code": 3207,
+                    "comment": 0,
+                    "blank": 0
+                },
+                "": {
+                    "code": 31,
+                    "comment": 4,
+                    "blank": 6
+                },
+                ".md": {
+                    "code": 1,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 11,
+                    "comment": 3,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 6,
+                    "code": 20,
+                    "comment": 1,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 11,
+                    "code": 45,
+                    "comment": 0,
+                    "filename": "controllers/auth/attemptChangePassword.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "controllers/auth/attemptLogin.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "controllers/auth/attemptRegister.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 52,
+                    "comment": 0,
+                    "filename": "controllers/auth/changeEmail.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "controllers/auth/handleLogin.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "controllers/auth/handleLogout.js"
+                },
+                {
+                    "blank": 12,
+                    "code": 57,
+                    "comment": 0,
+                    "filename": "controllers/auth/verifyCode.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "controllers/friendsController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "controllers/rateLimiter.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "controllers/serverController.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 25,
+                    "comment": 1,
+                    "filename": "controllers/socket/acceptFriendRequest.js"
+                },
+                {
+                    "blank": 18,
+                    "code": 97,
+                    "comment": 0,
+                    "filename": "controllers/socket/addFriend.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "controllers/socket/authorizeUser.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "controllers/socket/declineFriendRequest.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "controllers/socket/disconnect.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "controllers/socket/getChatMessages.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "controllers/socket/helpers.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "controllers/socket/initializeUser.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 4,
+                    "comment": 0,
+                    "filename": "controllers/socket/readChatMessages.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "controllers/socket/updateAbout.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "controllers/socket/updateAvatar.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "controllers/socket/updateBanner.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "controllers/socket/userMessage.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "controllers/user/updateAvatar.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 52,
+                    "comment": 0,
+                    "filename": "controllers/user/updateBanner.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "controllers/user/updateDescription.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "controllers/validateForm.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "db.js"
+                },
+                {
+                    "filename": "dump.rdb",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "images/avatars/47dee954b15053c2943a8060da27e4709f.jpg",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "images/banners/4789mbLcq.jpg",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 20,
+                    "code": 81,
+                    "comment": 0,
+                    "filename": "index.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 3168,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 39,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 1,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "redis.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "routers/authRouter.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "routers/friendsRouter.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "routers/userRouter.js"
+                }
+            ]
         }
     ]
 }
