@@ -4,6 +4,7 @@ const fs = require('fs')
 const {
     dirname
 } = require('path');
+const redisClient = require("../redis");
 
 router
     .route('/getFile/:filename')
@@ -15,19 +16,31 @@ router
     })
 
 router
-    .route("/uploadFile")
+    .route("/uploadFile/:userid")
     .post((req, res) => {
         if (!req.session.user || !req.session.user.id) {
             res.json({
                 error: 'Not authorized'
             })
         }
-    
-        const userid = req.session.user.id
+
+        const usertoid = req.params.userid
+
+        if (!usertoid) return
+
+        const userid = req.session.user.userid
         let file = req.files.file
-        const fileName = `${userid}_${file.name}`
+        const fileName = `${req.session.user.id}_${file.name}`
         let path = dirname(require.main.filename) + '/upload/' + fileName
-    
+
+        let fileType = 'FILE';
+
+        if (file.mimetype.startsWith('video')) {
+            fileType = 'VIDEO'
+        } else if (file.mimetype.startsWith('image')) {
+            fileType = 'IMAGE'
+        }
+
         file.mv(path, async (error) => {
             if (error) {
                 res.writeHead(500, {
@@ -39,14 +52,22 @@ router
                 }))
                 return
             }
-    
+
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             })
-    
+
+            const messageString = [new Date().getTime(), fileType, usertoid, userid, fileName].join(".")
+
+            await redisClient.hincrby(`userid:${usertoid}:chats`, userid, 1)
+
+            await redisClient.rpush(`chats:${usertoid}:${userid}`, messageString)
+            await redisClient.rpush(`chats:${userid}:${usertoid}`, messageString)
+
             res.end(JSON.stringify({
                 status: 'success',
-                path: fileName
+                path: fileName,
+                fileType
             }))
         })
     })
