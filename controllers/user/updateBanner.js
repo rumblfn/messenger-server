@@ -13,7 +13,8 @@ module.exports.updateBanner = async (req, res) => {
     const userid = req.session.user.id
 
     let bannerFile = req.files.banner
-    const fileName = `${userid}${bannerFile.name}`
+    let filenameSliced = bannerFile.name.split('.')
+    const fileName = `${userid}.${filenameSliced[filenameSliced.length - 1]}`
     const path = dirname(require.main.filename) + '/images/banners/' + fileName
 
     bannerFile.mv(path, async (error) => {

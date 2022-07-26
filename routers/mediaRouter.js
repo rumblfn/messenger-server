@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const fs = require('fs')
 const {
     dirname
 } = require('path');
-const redisClient = require("../redis");
 
 router
     .route('/getFile/:filename')
@@ -56,13 +54,6 @@ router
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             })
-
-            const messageString = [new Date().getTime(), fileType, usertoid, userid, fileName].join(".")
-
-            await redisClient.hincrby(`userid:${usertoid}:chats`, userid, 1)
-
-            await redisClient.rpush(`chats:${usertoid}:${userid}`, messageString)
-            await redisClient.rpush(`chats:${userid}:${usertoid}`, messageString)
 
             res.end(JSON.stringify({
                 status: 'success',

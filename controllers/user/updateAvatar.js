@@ -13,7 +13,8 @@ module.exports.updateAvatar = async (req, res) => {
     const userid = req.session.user.id
 
     let avatarFile = req.files.avatar
-    const fileName = `${userid}${avatarFile.name}`
+    let filenameSliced = avatarFile.name.split('.')
+    const fileName = `${userid}.${filenameSliced[filenameSliced.length - 1]}`
     const path = dirname(require.main.filename) + '/images/avatars/' + fileName
 
     avatarFile.mv(path, async (error) => {
