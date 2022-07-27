@@ -3,6 +3,9 @@ const router = express.Router();
 const {
     dirname
 } = require('path');
+const {
+    v4: uuidv4
+} = require('uuid')
 
 router
     .route('/getFile/:filename')
@@ -28,7 +31,7 @@ router
 
         const userid = req.session.user.userid
         let file = req.files.file
-        const fileName = `${req.session.user.id}_${file.name}`
+        const fileName = `${req.session.user.id}_${uuidv4(8)}_${file.name}`
         let path = dirname(require.main.filename) + '/upload/' + fileName
 
         let fileType = 'FILE';
