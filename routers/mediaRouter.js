@@ -29,9 +29,8 @@ router
 
         if (!usertoid) return
 
-        const userid = req.session.user.userid
         let file = req.files.file
-        const fileName = `${req.session.user.id}_${uuidv4(8)}_${file.name}`
+        const fileName = `${uuidv4(8)}_${file.name}`
         let path = dirname(require.main.filename) + '/upload/' + fileName
 
         let fileType = 'FILE';

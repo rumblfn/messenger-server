@@ -14,15 +14,26 @@ module.exports.acceptConf = async (socket, user) => {
         socket.user.username, socket.user.userid, 'incoming'
     ].join('.'))
 
+    const cuser = await redisClient.hgetall(`userid:${socket.user.userid}`)
+    const friend = await redisClient.hgetall(`userid:${user.userid}`)
+
     socket.to(user.userid).emit("add_chat", {
         username: socket.user.username,
         userid: socket.user.userid,
-        connected: true
+        connected: eval(cuser?.connected),
+        lastActiveTime: cuser?.lastActiveTime,
+        banner: cuser?.banner,
+        avatar: cuser?.avatar,
+        about: cuser?.about
     })
 
     socket.emit("add_chat", {
         username: user.username,
         userid: user.userid,
-        connected: user.connected // connection
+        connected: user.connected,
+        lastActiveTime: friend?.lastActiveTime,
+        banner: friend?.banner,
+        avatar: friend?.avatar,
+        about: friend?.about
     })
 }
