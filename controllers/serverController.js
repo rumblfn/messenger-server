@@ -24,7 +24,7 @@ const wrap = expressMiddleware => (socket, next) =>
     expressMiddleware(socket.request, {}, next)
 
 const corsConfig = {
-    origin: [process.env.ORIGIN_URL, process.env.VIDEO_URL],
+    origin: process.env.CLIENT_URL, // [process.env.ORIGIN_URL, process.env.VIDEO_URL],
     credentials: true,
     api: {
         bodyParser: false,
