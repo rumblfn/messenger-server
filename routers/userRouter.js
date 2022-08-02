@@ -3,6 +3,7 @@ const { updateBanner } = require("../controllers/user/updateBanner");
 const router = express.Router();
 const { updateAvatar } = require("../controllers/user/updateAvatar");
 const { updateDescription } = require("../controllers/user/updateDescription");
+const {getFriends} = require("../controllers/user/getFriends");
 
 router
     .route("/update-banner")
@@ -15,5 +16,9 @@ router
 router
     .route('/update-description')
     .post(updateDescription)
+
+router
+    .route('/get_friends')
+    .get(getFriends)
 
 module.exports = router

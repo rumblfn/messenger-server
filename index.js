@@ -76,7 +76,7 @@ app.use("/auth", authRouter)
 app.use("/friends", friendsRouter)
 app.use('/user', userRouter)
 app.use('/media', mediaRouter)
-app.set('trust proxy', 1)
+// app.set('trust proxy', 1)
 
 app.get('/', (req, res) => {
     res.json('Server for messenger')

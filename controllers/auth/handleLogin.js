@@ -8,6 +8,13 @@ module.exports.handleLogin = async (req, res) => {
             [req.session.user.username]
         )
 
+        if (!potentionLogin.rowCount) {
+            res.json({
+                loggedIn: false
+            })
+            return
+        }
+
         res.json({
             loggedIn: true,
             username: req.session.user.username,
