@@ -3,14 +3,16 @@ const bcrypt = require("bcrypt")
 
 module.exports.attemptLogin = async (req, res) => {
     const potentionLogin = await pool.query(
-        "SELECT id, username, passhash, userid, email, avatar, banner, description FROM users WHERE username=$1",
+        "SELECT * FROM users WHERE username=$1",
         [req.body.username]
     )
+
+    const data = potentionLogin.rows[0]
 
     if (potentionLogin.rowCount > 0) {
         const isSamePass = await bcrypt.compare(
             req.body.password,
-            potentionLogin.rows[0].passhash
+            data.passhash
         )
 
         if (isSamePass) {
@@ -21,13 +23,7 @@ module.exports.attemptLogin = async (req, res) => {
             }
             res.json({
                 loggedIn: true,
-                username: req.body.username,
-                id: potentionLogin.rows[0].id,
-                userid: potentionLogin.rows[0].userid,
-                email: potentionLogin.rows[0].email,
-                avatar: potentionLogin.rows[0].avatar,
-                banner: potentionLogin.rows[0].banner,
-                description: potentionLogin.rows[0].description
+                ...data
             })
         } else {
             res.json({

@@ -4,9 +4,11 @@ module.exports.handleLogin = async (req, res) => {
     if (req.session.user && req.session.user.username) {
 
         const potentionLogin = await pool.query(
-            "SELECT id, username, userid, email, avatar, banner, description FROM users WHERE username=$1",
+            "SELECT * FROM users WHERE username=$1",
             [req.session.user.username]
         )
+
+        const data = potentionLogin.rows[0]
 
         if (!potentionLogin.rowCount) {
             res.json({
@@ -17,13 +19,7 @@ module.exports.handleLogin = async (req, res) => {
 
         res.json({
             loggedIn: true,
-            username: req.session.user.username,
-            id: potentionLogin.rows[0].id,
-            userid: potentionLogin.rows[0].userid,
-            email: potentionLogin.rows[0].email,
-            avatar: potentionLogin.rows[0].avatar,
-            banner: potentionLogin.rows[0].banner,
-            description: potentionLogin.rows[0].description
+            ...data
         })
     } else {
         res.json({

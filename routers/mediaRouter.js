@@ -1,68 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {
-    dirname
-} = require('path');
-const {
-    v4: uuidv4
-} = require('uuid')
+const {uploadFile} = require("../controllers/media/uploadFiles");
+const {getFile} = require("../controllers/media/getFile");
 
 router
     .route('/getFile/:filename')
-    .get((req, res) => {
-        const fileName = req.params.filename
-        let path = dirname(require.main.filename) + '/upload/' + fileName
-
-        res.sendFile(path)
-    })
+    .get(getFile)
 
 router
     .route("/uploadFile/:userid")
-    .post((req, res) => {
-        if (!req.session.user || !req.session.user.id) {
-            res.json({
-                error: 'Not authorized'
-            })
-        }
-
-        const usertoid = req.params.userid
-
-        if (!usertoid) return
-
-        let file = req.files.file
-        const fileName = `${uuidv4(8)}_${file.name}`
-        let path = dirname(require.main.filename) + '/upload/' + fileName
-
-        let fileType = 'FILE';
-
-        if (file.mimetype.startsWith('video')) {
-            fileType = 'VIDEO'
-        } else if (file.mimetype.startsWith('image')) {
-            fileType = 'IMAGE'
-        }
-
-        file.mv(path, async (error) => {
-            if (error) {
-                res.writeHead(500, {
-                    'Content-Type': 'application/json'
-                })
-                res.end(JSON.stringify({
-                    status: 'error',
-                    message: error
-                }))
-                return
-            }
-
-            res.writeHead(200, {
-                'Content-Type': 'application/json'
-            })
-
-            res.end(JSON.stringify({
-                status: 'success',
-                path: fileName,
-                fileType
-            }))
-        })
-    })
+    .post(uploadFile)
 
 module.exports = router
