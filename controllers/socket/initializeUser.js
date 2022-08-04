@@ -1,5 +1,6 @@
 const redisClient = require("../../redis");
 const { isEmptyObj, parseFriendList } = require("./helpers");
+const {handleTimestamp} = require("../../common/handleTimestamp");
 
 module.exports.initializeUser = async socket => {
     socket.user = {
@@ -26,7 +27,10 @@ module.exports.initializeUser = async socket => {
     )
 
     if (friendRooms && friendRooms.length) {
-        socket.to(friendRooms).emit("connected", true, socket.user.username)
+        socket.to(friendRooms).emit("connected", true, {
+            username: socket.user.username,
+            ...handleTimestamp()
+        })
     }
 
     socket.emit("friends", parsedFriendList);
