@@ -13,7 +13,9 @@ module.exports.initializeUser = async socket => {
         "userid",
         socket.user.userid,
         "connected",
-        true
+        true,
+        "username",
+        socket.user.username
     );
     const friendList = await redisClient.lrange(
         `friends:${socket.user.userid}`,
