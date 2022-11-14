@@ -9,6 +9,7 @@ const authRouter = require("./routers/authRouter")
 const friendsRouter = require("./routers/friendsRouter")
 const userRouter = require('./routers/userRouter')
 const mediaRouter = require('./routers/mediaRouter')
+const groupRouter = require('./routers/groupRouter')
 require("dotenv").config();
 const server = require("http").createServer(app)
 const fileupload = require('express-fileupload')
@@ -76,6 +77,7 @@ app.use("/auth", authRouter)
 app.use("/friends", friendsRouter)
 app.use('/user', userRouter)
 app.use('/media', mediaRouter)
+app.use('/group', groupRouter)
 // app.set('trust proxy', 1)
 
 app.get('/', (req, res) => {
@@ -109,7 +111,6 @@ io.on("connect", socket => {
     socket.on('delete-message-me', messageToDelete => delMessage(socket, messageToDelete, false))
 
     socket.on('delete-message-me-and-user', messageToDelete => delMessage(socket, messageToDelete, true))
-
 });
 
 server.listen(4000, () => {

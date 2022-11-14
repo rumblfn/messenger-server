@@ -1,0 +1,35 @@
+-- Table: public.emailsverification
+
+-- DROP TABLE IF EXISTS public.emailsverification;
+
+CREATE TABLE public.emailsverification
+(
+    id SERIAL primary key,
+    userid integer NOT NULL,
+    email varchar NOT NULL,
+    "timestamp" varchar NOT NULL,
+    code varchar NOT NULL,
+    CONSTRAINT fk_userid FOREIGN KEY (userid)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.emailsverification
+    OWNER to samilvaliahmetov;
+
+CREATE TABLE public.users
+(
+id SERIAL primary key,
+username varchar(30) UNIQUE NOT NULL,
+passhash varchar NOT NULL,
+userid varchar UNIQUE NOT NULL,
+email varchar,
+avatar varchar,
+banner varchar,
+description varchar
+);
+
+ALTER TABLE IF EXISTS public.users OWNER to samilvaliahmetov;
