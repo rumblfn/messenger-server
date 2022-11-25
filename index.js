@@ -59,6 +59,7 @@ const {
 const {
     delMessage
 } = require("./controllers/socket/deleteMessage");
+const {createGroup} = require("./controllers/socket/createGroup");
 
 const io = new Server(server, {
     cors: corsConfig
@@ -86,8 +87,10 @@ app.get('/', (req, res) => {
 
 io.use(wrap(sessionMiddleware))
 io.use(authorizeUser)
-io.on("connect", socket => {
-    initializeUser(socket);
+io.on("connect", async socket => {
+    await initializeUser(socket);
+
+    socket.on('new_group', (params, cb) => createGroup(socket, params, cb))
 
     socket.on("add_friend", (friendName, cb) => addFriend(socket, friendName, cb))
 
