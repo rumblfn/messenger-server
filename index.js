@@ -59,7 +59,7 @@ const {
 const {
     delMessage
 } = require("./controllers/socket/deleteMessage");
-const {createGroup} = require("./controllers/socket/createGroup");
+const {createGroup} = require("./controllers/socket/groups/createGroup");
 
 const io = new Server(server, {
     cors: corsConfig

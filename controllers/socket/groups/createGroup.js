@@ -1,4 +1,4 @@
-const redisClient = require("../../redis");
+const redisClient = require("../../../redis");
 const {
   v4: uuidv4
 } = require('uuid')
@@ -18,14 +18,13 @@ module.exports.createGroup = async (socket, params, cb) => {
     "owner", socket.user.userid
   )
   await redisClient.rpush(`groups:${groupId}:members`, socket.user.userid)
-  await redisClient.hset(`userid:${socket.user.userid}:groups:${groupId}`,
-    "id", groupId,
-    "unreadMessages", 0
-  )
+  const groupString = [groupId, 0].join(".")
+  await redisClient.lpush(`userid:${socket.user.userid}:groups`, groupString)
 
   for (const friendId of params?.addedFriends || []) {
     const friend = await redisClient.hgetall(`userid:${friendId}`)
     if (friend) {
+      await redisClient.lpush(`userid:${friendId}:groups`, groupString)
       await redisClient.rpush(`groups:${groupId}:members`, friendId)
       socket.to(friend.userid).emit("add_group", groupObj)
     }
