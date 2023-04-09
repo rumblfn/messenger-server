@@ -39,7 +39,7 @@ module.exports.changeEmail = async (req, res) => {
         `
     };
 
-    transporter.sendMail(mailOptions, async (error, info) => {
+    await transporter.sendMail(mailOptions, async (error, info) => {
         if (error) {
             res.json({
                 sent: false
@@ -51,10 +51,11 @@ module.exports.changeEmail = async (req, res) => {
         })
 
         const currentTime = (new Date()).getTime()
-    
+
         await pool.query(
-            `INSERT INTO emailsverification(userid, email, timestamp, code) values($1, $2, $3, $4)`,
-            [userid, req.body.email, currentTime, randomValue]
+          `INSERT INTO emailsverification(userid, email, timestamp, code)
+           values ($1, $2, $3, $4)`,
+          [userid, req.body.email, currentTime, randomValue]
         )
     });
 }

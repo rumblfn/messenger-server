@@ -60,10 +60,11 @@ module.exports.initializeUser = async socket => {
     const groups = (await redisClient.lrange(`userid:${socket.user.userid}:groups`, 0, -1)) || []
     if (groups.length) {
         const groupsData = []
+
         for (const groupString of groups) {
             const parsedString = groupString.split('.')
-            const groupId = parsedString.pop()
             const unreadMessages = parsedString.pop() || 0
+            const groupId = parsedString.pop()
 
             const groupData = await redisClient.hgetall(`groups:${groupId}`)
             groupsData.push({...groupData, unreadMessages, id: groupId})
