@@ -9,7 +9,7 @@ module.exports.changeEmail = async (req, res) => {
         return
     }
 
-    let transporter = nodeMailer.createTransport({
+    const transporter = nodeMailer.createTransport({
         service: 'gmail',
         auth: {
             user: 'messengerserviceemailer@gmail.com',

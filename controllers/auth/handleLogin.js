@@ -1,6 +1,7 @@
 const pool = require("../../db")
 
 module.exports.handleLogin = async (req, res) => {
+    console.log(req)
     if (req.session.user && req.session.user.username) {
 
         const potentionLogin = await pool.query(
